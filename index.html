@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dilawar Naqvi — Web Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -785,25 +787,35 @@ section { padding: 6rem 5%; }
 .testimonials .section-tag { color: var(--gold); }
 .testimonials .section-title { color: var(--white); }
 
-.testi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+.testi-owl-wrap {
   margin-top: 4rem;
+  position: relative;
+  padding: 0 1rem;
 }
 
 .testi-card {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 4px;
-  padding: 2rem;
-  transition: border-color 0.3s, background 0.3s;
+  border-radius: 6px;
+  padding: 2.2rem;
+  margin: 0.5rem 0.75rem 1.5rem;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 .testi-card:hover {
   border-color: var(--gold);
-  background: rgba(201,168,76,0.05);
+  background: rgba(201,168,76,0.06);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.35);
 }
 
+.testi-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.35;
+  margin-bottom: 0.3rem;
+}
 .testi-stars {
   color: var(--gold);
   font-size: 0.85rem;
@@ -812,38 +824,97 @@ section { padding: 6rem 5%; }
 }
 .testi-text {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.8;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.9;
   font-style: italic;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
+  min-height: 80px;
 }
 .testi-author {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 1.2rem;
 }
 .testi-avatar {
-  width: 40px; height: 40px;
+  width: 48px; height: 48px;
   border-radius: 50%;
-  background: var(--gold);
+  background: linear-gradient(135deg, var(--gold), #a07830);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--white);
   flex-shrink: 0;
+  border: 2px solid rgba(201,168,76,0.25);
 }
 .testi-name {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 500;
   color: var(--white);
 }
 .testi-role {
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 0.04em;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em;
+  margin-top: 0.15rem;
+}
+
+/* ── OWL CAROUSEL CUSTOM STYLES ── */
+.testi-owl-wrap .owl-nav button.owl-prev,
+.testi-owl-wrap .owl-nav button.owl-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,0.07) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  color: var(--white) !important;
+  font-size: 1.2rem !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, border-color 0.25s !important;
+  margin: 0 !important;
+}
+.testi-owl-wrap .owl-nav button.owl-prev:hover,
+.testi-owl-wrap .owl-nav button.owl-next:hover {
+  background: var(--gold) !important;
+  border-color: var(--gold) !important;
+}
+.testi-owl-wrap .owl-nav button.owl-prev { left: -24px; }
+.testi-owl-wrap .owl-nav button.owl-next { right: -24px; }
+.testi-owl-wrap .owl-nav button span { font-size: 1.4rem; line-height: 1; }
+
+/* Dots */
+.testi-owl-wrap .owl-dots {
+  text-align: center;
+  margin-top: 1.8rem;
+}
+.testi-owl-wrap .owl-dot span {
+  width: 8px !important;
+  height: 8px !important;
+  background: rgba(255,255,255,0.18) !important;
+  border-radius: 50% !important;
+  margin: 0 5px !important;
+  display: block;
+  transition: all 0.3s !important;
+}
+.testi-owl-wrap .owl-dot.active span {
+  background: var(--gold) !important;
+  width: 28px !important;
+  border-radius: 4px !important;
+}
+
+@media (max-width: 768px) {
+  .testi-owl-wrap .owl-nav button.owl-prev { left: -8px; }
+  .testi-owl-wrap .owl-nav button.owl-next { right: -8px; }
 }
 
 /* ── CONTACT ── */
@@ -1089,7 +1160,9 @@ footer .f-logo span { color: var(--gold); }
   <div class="section-tag reveal">About Me</div>
   <div class="about-grid">
     <div class="about-img-wrap reveal">
-      <div class="about-img-box"></div>
+      <div class="">
+        <img src="IMG_20231223_171655_230.jpg" width="100%" alt="">
+      </div>
       <div class="about-deco-line"></div>
       <div class="about-exp-badge">
         <div class="num">3</div>
@@ -1291,50 +1364,88 @@ footer .f-logo span { color: var(--gold); }
 <section class="testimonials" id="testimonials">
   <div class="section-tag reveal">Client Reviews</div>
   <h2 class="section-title reveal">What Clients <em>Say</em></h2>
-  <div class="testi-grid">
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Dilawar delivered an exceptional website for our business. Clean design, fast loading and exactly what we envisioned. Highly recommended!"</div>
-      <div class="testi-author">
-        <div class="testi-avatar">A</div>
-        <div>
-          <div class="testi-name">Ahmed Khan</div>
-          <div class="testi-role">Business Owner</div>
+
+  <div class="testi-owl-wrap reveal">
+    <div class="owl-carousel testi-owl">
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Dilawar delivered an exceptional website for our business. Clean design, fast loading and exactly what we envisioned. Highly recommended!</div>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Ahmed Khan</div>
+            <div class="testi-role">Business Owner</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"The WordPress store he built for us is beautiful and easy to manage. Sales increased after the launch. Great work Dilawar!"</div>
-      <div class="testi-author">
-        <div class="testi-avatar">S</div>
-        <div>
-          <div class="testi-name">Sara Ali</div>
-          <div class="testi-role">E-Commerce Founder</div>
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">The WordPress store he built for us is beautiful and easy to manage. Sales increased after the launch. Great work Dilawar!</div>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div>
+            <div class="testi-name">Sara Ali</div>
+            <div class="testi-role">E-Commerce Founder</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Professional, responsive and talented. He redesigned our old site completely and the result is stunning. Will work with him again!"</div>
-      <div class="testi-author">
-        <div class="testi-avatar">R</div>
-        <div>
-          <div class="testi-name">Rahul Sharma</div>
-          <div class="testi-role">Startup CEO</div>
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Professional, responsive and talented. He redesigned our old site completely and the result is stunning. Will work with him again!</div>
+        <div class="testi-author">
+          <div class="testi-avatar">R</div>
+          <div>
+            <div class="testi-name">Rahul Sharma</div>
+            <div class="testi-role">Startup CEO</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <div class="testi-text">"Great communication throughout the project. He understood our needs and delivered beyond expectations. Very happy with the result!"</div>
-      <div class="testi-author">
-        <div class="testi-avatar">F</div>
-        <div>
-          <div class="testi-name">Fatima Sheikh</div>
-          <div class="testi-role">Marketing Manager</div>
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Great communication throughout the project. He understood our needs and delivered beyond expectations. Very happy with the result!</div>
+        <div class="testi-author">
+          <div class="testi-avatar">F</div>
+          <div>
+            <div class="testi-name">Fatima Sheikh</div>
+            <div class="testi-role">Marketing Manager</div>
+          </div>
         </div>
       </div>
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Dilawar is a true professional. He built our landing page in record time and the conversion rate improved significantly. Thank you!</div>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Mohammed Raza</div>
+            <div class="testi-role">Digital Marketer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Excellent quality work! The website he made for our restaurant looks amazing on all devices. Our customers love it. 100% recommend!</div>
+        <div class="testi-author">
+          <div class="testi-avatar">P</div>
+          <div>
+            <div class="testi-name">Priya Menon</div>
+            <div class="testi-role">Restaurant Owner</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1352,7 +1463,7 @@ footer .f-logo span { color: var(--gold); }
           <div class="contact-item-icon">📧</div>
           <div class="contact-item-text">
             <div class="label">Email</div>
-            <div class="val">dilawarnaqvi@email.com</div>
+            <div class="val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f2969b9e938593809c9383849bb2979f939b9edc919d9f">[email&#160;protected]</a></div>
           </div>
         </div>
         <div class="contact-item">
@@ -1420,7 +1531,7 @@ footer .f-logo span { color: var(--gold); }
   <div>Made with ❤️ in India</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Custom Cursor ──
 const cursor = document.getElementById('cursor');
 const follower = document.getElementById('cursorFollower');
@@ -1537,6 +1648,30 @@ const statsObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 const heroStats = document.querySelector('.hero-stats');
 if (heroStats) statsObserver.observe(heroStats);
+</script>
+
+<!-- jQuery + Owl Carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('.testi-owl').owlCarousel({
+    loop: true,
+    margin: 24,
+    nav: true,
+    dots: true,
+    autoplay: true,
+    autoplayTimeout: 4500,
+    autoplayHoverPause: true,
+    smartSpeed: 700,
+    navText: ['&#8592;', '&#8594;'],
+    responsive: {
+      0:    { items: 1 },
+      640:  { items: 2 },
+      1024: { items: 3 }
+    }
+  });
+});
 </script>
 </body>
 </html>
