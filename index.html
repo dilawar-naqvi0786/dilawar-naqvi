@@ -1,474 +1,1542 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Dilawar Naqvi - Professional Web Designer specializing in modern, responsive websites">
-    <title>Dilawar Naqvi | Web Designer & Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
-        rel="stylesheet">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dilawar Naqvi — Web Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+:root {
+  --white: #ffffff;
+  --off: #f8f7f4;
+  --light: #efefeb;
+  --ink: #111111;
+  --ink2: #444444;
+  --ink3: #888888;
+  --accent: #1a1a2e;
+  --gold: #c9a84c;
+  --border: rgba(0,0,0,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--ink);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+}
+.cursor-follower {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.15s, width 0.3s, height 0.3s, background 0.3s;
+}
+.cursor-follower.hovered {
+  width: 60px; height: 60px;
+  background: rgba(17,17,17,0.06);
+  border-color: var(--gold);
+}
+
+/* ── NAVBAR ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 5%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-hire {
+  background: var(--ink);
+  color: var(--white) !important;
+  padding: 0.5rem 1.3rem;
+  border-radius: 2px;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.1em !important;
+  transition: background 0.3s, color 0.3s !important;
+}
+.nav-hire:hover { background: var(--gold) !important; color: var(--white) !important; }
+.nav-hire::after { display: none !important; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 70px; left: 0; right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 5%;
+  z-index: 99;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  font-size: 1.1rem;
+  font-family: 'Playfair Display', serif;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 5%;
+  padding-top: 70px;
+  gap: 4rem;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-text {
+  position: absolute;
+  top: 50%;
+  right: -2%;
+  transform: translateY(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(8rem, 18vw, 20rem);
+  font-weight: 700;
+  color: rgba(0,0,0,0.025);
+  pointer-events: none;
+  white-space: nowrap;
+  letter-spacing: -0.05em;
+  user-select: none;
+}
+
+.hero-left { position: relative; z-index: 2; }
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.hero-tag::before {
+  content: '';
+  width: 30px; height: 1px;
+  background: var(--gold);
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-desc {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ink3);
+  line-height: 1.8;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ink);
+  color: var(--white);
+  padding: 0.85rem 2rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s;
+  border: 1.5px solid var(--ink);
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.65,0,0.35,1);
+}
+.btn-primary:hover::before { transform: scaleX(1); transform-origin: left; }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  padding: 0.85rem 2rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.3s, color 0.3s;
+}
+.btn-outline:hover { background: var(--ink); color: var(--white); }
+
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+.stat-num span { color: var(--gold); }
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--ink3);
+  letter-spacing: 0.05em;
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+}
+
+/* Hero right — visual card */
+.hero-right {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-card {
+  width: 380px;
+  aspect-ratio: 3/4;
+  background: var(--off);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.hero-card-inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0ede6 0%, #e8e4da 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hero-avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #a07830 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.05em;
+}
+
+.hero-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+.hero-card-role {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+}
+
+.hero-card-skills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 1.5rem;
+  margin-top: 0.5rem;
+}
+.hero-card-skills span {
+  background: var(--white);
+  border: 1px solid var(--border);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  color: var(--ink2);
+  letter-spacing: 0.04em;
+}
+
+.hero-card-badge {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.8rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.hero-deco {
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 100px; height: 100px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+.hero-deco2 {
+  position: absolute;
+  bottom: -30px; left: -30px;
+  width: 140px; height: 140px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  opacity: 0.07;
+}
+
+/* ── SECTION COMMON ── */
+section { padding: 6rem 5%; }
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+.section-tag::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+
+.section-sub {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink3);
+  line-height: 1.8;
+  max-width: 500px;
+}
+
+/* ── ABOUT ── */
+.about { background: var(--off); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 6rem;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.about-img-wrap {
+  position: relative;
+}
+
+.about-img-box {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg, #e8e3da, #d5cfc3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 6rem;
+  font-weight: 700;
+  color: rgba(0,0,0,0.06);
+  letter-spacing: -0.05em;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.about-img-box::after {
+  content: 'DN';
+  position: absolute;
+  font-family: 'Playfair Display', serif;
+  font-size: 8rem;
+  font-weight: 700;
+  color: rgba(201,168,76,0.15);
+}
+
+.about-exp-badge {
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.5rem;
+  background: var(--ink);
+  color: var(--white);
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+.about-exp-badge .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.about-exp-badge .txt {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+}
+
+.about-deco-line {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  width: 60%; height: 60%;
+  border: 1.5px solid var(--gold);
+  border-radius: 4px;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.about-content p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink2);
+  line-height: 1.9;
+  margin-bottom: 1.2rem;
+}
+
+.about-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 2rem 0;
+}
+.about-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--ink2);
+}
+.about-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ── SKILLS ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.skill-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.07);
+  border-color: var(--gold);
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 0;
+  background: var(--gold);
+  transition: height 0.4s ease;
+}
+.skill-card:hover::before { height: 100%; }
+
+.skill-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.skill-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.skill-desc {
+  font-size: 0.83rem;
+  color: var(--ink3);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+.skill-bar-wrap {
+  background: var(--light);
+  height: 3px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.skill-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #a07830);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s ease;
+}
+.skill-bar.animated { transform: scaleX(1); }
+
+.skill-pct {
+  font-size: 0.7rem;
+  color: var(--ink3);
+  letter-spacing: 0.06em;
+  margin-top: 0.4rem;
+  text-align: right;
+}
+
+/* ── SERVICES ── */
+.services { background: var(--off); }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.service-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2.5rem 2rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.08);
+}
+
+.service-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: rgba(0,0,0,0.04);
+  line-height: 1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.05em;
+}
+.service-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+}
+.service-desc {
+  font-size: 0.85rem;
+  color: var(--ink3);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.service-tags span {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--ink3);
+}
+
+/* ── PORTFOLIO ── */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.project-card {
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background: var(--white);
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.10);
+}
+
+.project-img {
+  aspect-ratio: 16/10;
+  background: var(--light);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-img-bg {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  transition: transform 0.4s;
+}
+.project-card:hover .project-img-bg { transform: scale(1.05); }
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(17,17,17,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.project-card:hover .project-overlay { opacity: 1; }
+.project-overlay a {
+  background: var(--white);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s, color 0.2s;
+}
+.project-overlay a:hover { background: var(--gold); color: var(--white); }
+
+.project-body { padding: 1.5rem; }
+.project-type {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+.project-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.project-desc {
+  font-size: 0.82rem;
+  color: var(--ink3);
+  line-height: 1.7;
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials { background: var(--ink); }
+.testimonials .section-tag { color: var(--gold); }
+.testimonials .section-title { color: var(--white); }
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.testi-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 2rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+.testi-card:hover {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.05);
+}
+
+.testi-stars {
+  color: var(--gold);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.testi-text {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.testi-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.testi-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--white);
+}
+.testi-role {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.04em;
+}
+
+/* ── CONTACT ── */
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 6rem;
+  margin-top: 4rem;
+  align-items: start;
+}
+
+.contact-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.contact-info p {
+  font-size: 0.9rem;
+  color: var(--ink3);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.contact-items { display: flex; flex-direction: column; gap: 1.2rem; }
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.contact-item-icon {
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.contact-item-text .label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.contact-item-text .val {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.contact-socials {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.social-btn {
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--ink2);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.social-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--white); }
+
+/* Form */
+.contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink);
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 0.85rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--gold);
+  background: var(--white);
+}
+.form-group textarea { height: 130px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.5);
+  padding: 2rem 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+footer .f-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+}
+footer .f-logo span { color: var(--gold); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
+  .hero-right { display: none; }
+  .hero-desc { margin: 0 auto 2.5rem; }
+  .hero-btns { justify-content: center; }
+  .hero-stats { justify-content: center; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-img-wrap { max-width: 340px; margin: 0 auto; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav-links, nav > .nav-hire { display: none; }
+  .hamburger { display: flex; }
+  section { padding: 4rem 5%; }
+  .hero h1 { font-size: 2.5rem; }
+}
+
+@media (max-width: 480px) {
+  .about-list { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: column; gap: 1.5rem; align-items: center; }
+}
+</style>
+</head>
 <body>
 
-    <!-- ============ NAVIGATION BAR ============ -->
-    <header>
-        <nav class="navbar" id="navbar">
-            <div class="nav-container">
-                <div class="logo">
-                    <a href="#home">Dilawar<span class="highlight">.Naqvi</span></a>
-                </div>
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
 
-                <ul class="nav-menu" id="nav-menu">
-                    <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
-                    <li class="nav-item"><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                    <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-                    <li class="nav-item"><a href="#contact" class="btn-nav">Hire Me</a></li>
-                </ul>
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" href="#home">Dilawar<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact" class="nav-hire">Hire Me</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
 
-                <!-- Hamburger Menu Icon -->
-                <div class="hamburger" id="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </div>
-        </nav>
-    </header>
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#services">Services</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#testimonials">Reviews</a>
+  <a href="#contact">Hire Me</a>
+</div>
 
-    <!-- ============ HERO SECTION ============ -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <p class="hero-greeting">Hello, I'm</p>
-            <h1 class="hero-title">Dilawar Naqvi</h1>
-            <h2 class="hero-subtitle">Professional Web Designer & Developer</h2>
-            <p class="hero-description">I create stunning, responsive websites that drive results and elevate your
-                brand's digital presence.</p>
-            <div class="hero-buttons">
-                <a href="#portfolio" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-            </div>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/dilawar-naqvi/" target="_blank"><i
-                        class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.behance.net/dilawarnaqvi" target="_blank"><i class="fab fa-behance"></i></a>
-                <a href="https://github.com/dilawar-naqvi0786" target="_blank"><i class="fab fa-github"></i></a>
-
-            </div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">Design</div>
+  <div class="hero-left">
+    <div class="hero-tag">Available for Work</div>
+    <h1>Creative<br><em>Web Designer</em><br>& Developer</h1>
+    <p class="hero-desc">Hi, I'm Dilawar Naqvi — a passionate web designer with 3 years of experience crafting beautiful, functional websites using HTML, CSS, JS & WordPress.</p>
+    <div class="hero-btns">
+      <a href="#portfolio" class="btn-primary"><span>View My Work</span></a>
+      <a href="#contact" class="btn-outline">Let's Talk</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">Years Exp.</div>
+      </div>
+      <div>
+        <div class="stat-num">40<span>+</span></div>
+        <div class="stat-label">Projects Done</div>
+      </div>
+      <div>
+        <div class="stat-num">30<span>+</span></div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-deco"></div>
+    <div class="hero-deco2"></div>
+    <div class="hero-card">
+      <div class="hero-card-inner">
+        <div class="hero-avatar">DN</div>
+        <div class="hero-card-name">Dilawar Naqvi</div>
+        <div class="hero-card-role">Web Designer & Developer</div>
+        <div class="hero-card-skills">
+          <span>HTML/CSS</span>
+          <span>JavaScript</span>
+          <span>WordPress</span>
+          <span>UI Design</span>
         </div>
-        <div class="scroll-down">
-            <a href="#about"><i class="fas fa-chevron-down"></i></a>
+      </div>
+      <div class="hero-card-badge">Open to Work</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-tag reveal">About Me</div>
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-box"></div>
+      <div class="about-deco-line"></div>
+      <div class="about-exp-badge">
+        <div class="num">3</div>
+        <div class="txt">Years of<br>Experience</div>
+      </div>
+    </div>
+    <div class="about-content reveal">
+      <div class="section-tag">Who I Am</div>
+      <h2 class="section-title">Designing Digital<br><em>Experiences</em> That Matter</h2>
+      <p>I'm Dilawar Naqvi, a dedicated web designer and front-end developer based in India with over 3 years of hands-on experience building stunning websites for clients across various industries.</p>
+      <p>My passion lies in combining clean, semantic code with beautiful design principles to create websites that not only look amazing but also perform exceptionally — on every device.</p>
+      <ul class="about-list">
+        <li>HTML5 & CSS3</li>
+        <li>JavaScript (ES6+)</li>
+        <li>WordPress Development</li>
+        <li>Responsive Design</li>
+        <li>UI/UX Design</li>
+        <li>SEO Optimization</li>
+        <li>Web Performance</li>
+        <li>Figma / Design Tools</li>
+      </ul>
+      <a href="#contact" class="btn-primary"><span>Download CV</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag reveal">My Expertise</div>
+  <h2 class="section-title reveal">Skills & <em>Technologies</em></h2>
+  <p class="section-sub reveal">Tools and technologies I work with to deliver exceptional results.</p>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML5 & CSS3</div>
+      <div class="skill-desc">Semantic, accessible markup with modern CSS — animations, Grid, Flexbox & more.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
+      <div class="skill-pct">95%</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-desc">Interactive UI, DOM manipulation, ES6+ features and dynamic web experiences.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+      <div class="skill-pct">80%</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔷</div>
+      <div class="skill-name">WordPress</div>
+      <div class="skill-desc">Custom themes, plugins, Elementor, WooCommerce & full site editing.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+      <div class="skill-pct">90%</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">UI/UX Design</div>
+      <div class="skill-desc">Figma-based wireframes, prototypes and pixel-perfect design systems.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div>
+      <div class="skill-pct">78%</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📱</div>
+      <div class="skill-name">Responsive Design</div>
+      <div class="skill-desc">Mobile-first approach ensuring flawless experience on all screen sizes.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:93%"></div></div>
+      <div class="skill-pct">93%</div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🚀</div>
+      <div class="skill-name">Web Performance</div>
+      <div class="skill-desc">Optimization for speed, Core Web Vitals, SEO and best practices.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+      <div class="skill-pct">75%</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-tag reveal">What I Offer</div>
+  <h2 class="section-title reveal">My <em>Services</em></h2>
+  <p class="section-sub reveal">End-to-end web design and development solutions tailored to your needs.</p>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-title">Website Design</div>
+      <div class="service-desc">Custom, visually stunning websites designed from scratch to match your brand identity and business goals.</div>
+      <div class="service-tags"><span>UI Design</span><span>Figma</span><span>Branding</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <div class="service-title">Front-End Development</div>
+      <div class="service-desc">Clean, semantic HTML/CSS/JS code turning your designs into fast, interactive and responsive websites.</div>
+      <div class="service-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <div class="service-title">WordPress Development</div>
+      <div class="service-desc">Custom WordPress themes, plugins and WooCommerce stores built to your exact specifications.</div>
+      <div class="service-tags"><span>WordPress</span><span>WooCommerce</span><span>Elementor</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-title">Landing Pages</div>
+      <div class="service-desc">High-converting landing pages designed to capture leads and drive business growth for your campaigns.</div>
+      <div class="service-tags"><span>Conversion</span><span>SEO</span><span>Analytics</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">05</div>
+      <div class="service-title">Website Redesign</div>
+      <div class="service-desc">Modernize your outdated website with a fresh design that improves UX, performance and conversions.</div>
+      <div class="service-tags"><span>Revamp</span><span>UX</span><span>Performance</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">06</div>
+      <div class="service-title">Website Maintenance</div>
+      <div class="service-desc">Ongoing support, updates, security monitoring and performance optimization to keep your site running smoothly.</div>
+      <div class="service-tags"><span>Support</span><span>Security</span><span>Updates</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-tag reveal">My Work</div>
+  <h2 class="section-title reveal">Recent <em>Projects</em></h2>
+  <p class="section-sub reveal">A selection of projects I've designed and developed for clients.</p>
+  <div class="portfolio-grid">
+    <div class="project-card reveal">
+      <div class="project-img">
+        <div class="project-img-bg" style="background: linear-gradient(135deg,#f0ede6,#d8d2c4); color: rgba(0,0,0,0.08);">🏪</div>
+        <div class="project-overlay"><a href="#">View Project</a></div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">WordPress / E-Commerce</div>
+        <div class="project-name">Fashion Store — WooCommerce</div>
+        <div class="project-desc">Full WooCommerce store with custom theme, product filters and payment integration.</div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <div class="project-img-bg" style="background: linear-gradient(135deg,#e8f0ed,#ccddd6); color: rgba(0,0,0,0.08);">🏢</div>
+        <div class="project-overlay"><a href="#">View Project</a></div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">HTML / CSS / JS</div>
+        <div class="project-name">Corporate Business Website</div>
+        <div class="project-desc">Clean multi-page corporate site with animations, contact form and blog section.</div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <div class="project-img-bg" style="background: linear-gradient(135deg,#eee8f0,#d4c8dc); color: rgba(0,0,0,0.08);">🍽️</div>
+        <div class="project-overlay"><a href="#">View Project</a></div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">WordPress</div>
+        <div class="project-name">Restaurant Website</div>
+        <div class="project-desc">Elegant restaurant site with menu pages, reservation system and gallery.</div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <div class="project-img-bg" style="background: linear-gradient(135deg,#f0ece4,#e0d8cc); color: rgba(0,0,0,0.08);">🏋️</div>
+        <div class="project-overlay"><a href="#">View Project</a></div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">HTML / CSS / JS</div>
+        <div class="project-name">Fitness Landing Page</div>
+        <div class="project-desc">High-converting landing page for a fitness brand with animations and lead capture.</div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <div class="project-img-bg" style="background: linear-gradient(135deg,#e4ecf0,#c8d8e0); color: rgba(0,0,0,0.08);">🏠</div>
+        <div class="project-overlay"><a href="#">View Project</a></div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">WordPress</div>
+        <div class="project-name">Real Estate Website</div>
+        <div class="project-desc">Property listing site with search filters, map integration and agent profiles.</div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-img">
+        <div class="project-img-bg" style="background: linear-gradient(135deg,#f0ebe4,#ddd0c4); color: rgba(0,0,0,0.08);">💼</div>
+        <div class="project-overlay"><a href="#">View Project</a></div>
+      </div>
+      <div class="project-body">
+        <div class="project-type">HTML / CSS / JS</div>
+        <div class="project-name">Portfolio Website</div>
+        <div class="project-desc">Personal portfolio for a photographer with lightbox gallery and contact form.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-tag reveal">Client Reviews</div>
+  <h2 class="section-title reveal">What Clients <em>Say</em></h2>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Dilawar delivered an exceptional website for our business. Clean design, fast loading and exactly what we envisioned. Highly recommended!"</div>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Ahmed Khan</div>
+          <div class="testi-role">Business Owner</div>
         </div>
-    </section>
-
-    <!-- ============ ABOUT SECTION ============ -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Learn more about my journey</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Designing Digital Excellence</h3>
-                    <p>With a passion for creating exceptional digital experiences, I specialize in crafting websites
-                        that not only look beautiful but also deliver measurable results. My approach combines creative
-                        design thinking with technical expertise to build solutions that truly resonate with users.</p>
-                    <p>I believe in the power of clean code, intuitive interfaces, and responsive design. Every project
-                        is an opportunity to push boundaries and create something remarkable.</p>
-                    <div class="skills">
-                        <div class="skill-item">
-                            <i class="fas fa-palette"></i>
-                            <h4>UI/UX Design</h4>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-code"></i>
-                            <h4>Web Development</h4>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-mobile-alt"></i>
-                            <h4>Responsive Design</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-box">
-                        <h3 class="stat-number">50+</h3>
-                        <p>Projects Completed</p>
-                    </div>
-                    <div class="stat-box">
-                        <h3 class="stat-number">40+</h3>
-                        <p>Happy Clients</p>
-                    </div>
-                    <div class="stat-box">
-                        <h3 class="stat-number">5+</h3>
-                        <p>Years Experience</p>
-                    </div>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"The WordPress store he built for us is beautiful and easy to manage. Sales increased after the launch. Great work Dilawar!"</div>
+      <div class="testi-author">
+        <div class="testi-avatar">S</div>
+        <div>
+          <div class="testi-name">Sara Ali</div>
+          <div class="testi-role">E-Commerce Founder</div>
         </div>
-    </section>
-
-    <!-- ============ SERVICES SECTION ============ -->
-    <section id="services" class="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">My Services</h2>
-                <p class="section-subtitle">What I can do for you</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-pencil-ruler"></i>
-                    </div>
-                    <h3>UI/UX Design</h3>
-                    <p>Creating intuitive user interfaces with stunning visual designs that enhance user experience and
-                        engagement.</p>
-                    <ul class="service-features">
-                        <li>Wireframing & Prototyping</li>
-                        <li>User Research</li>
-                        <li>Interface Design</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h3>Web Development</h3>
-                    <p>Building fast, secure, and scalable websites using the latest technologies and best coding
-                        practices.</p>
-                    <ul class="service-features">
-                        <li>HTML5, CSS3, JavaScript</li>
-                        <li>React & Modern Frameworks</li>
-                        <li>WordPress Development</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Responsive Design</h3>
-                    <p>Ensuring your website looks pixel-perfect and functions flawlessly on all devices and screen
-                        sizes.</p>
-                    <ul class="service-features">
-                        <li>Mobile-First Approach</li>
-                        <li>Cross-Browser Compatible</li>
-                        <li>Performance Optimized</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3>SEO Optimization</h3>
-                    <p>Implementing SEO best practices to improve your website's visibility and search engine rankings.
-                    </p>
-                    <ul class="service-features">
-                        <li>On-Page SEO</li>
-                        <li>Technical SEO</li>
-                        <li>Performance Tuning</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <h3>Website Redesign</h3>
-                    <p>Modernizing outdated websites with fresh designs and improved functionality to boost conversions.
-                    </p>
-                    <ul class="service-features">
-                        <li>Design Audit</li>
-                        <li>Brand Refresh</li>
-                        <li>UX Improvements</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Support & Maintenance</h3>
-                    <p>Providing ongoing support and maintenance to keep your website running smoothly and securely.</p>
-                    <ul class="service-features">
-                        <li>Regular Updates</li>
-                        <li>Security Monitoring</li>
-                        <li>Bug Fixes</li>
-                    </ul>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Professional, responsive and talented. He redesigned our old site completely and the result is stunning. Will work with him again!"</div>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div>
+          <div class="testi-name">Rahul Sharma</div>
+          <div class="testi-role">Startup CEO</div>
         </div>
-    </section>
-
-    <!-- ============ PORTFOLIO SECTION ============ -->
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">My Portfolio</h2>
-                <p class="section-subtitle">Recent projects I've worked on</p>
-            </div>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <img src="alphahospitals.webp" alt="E-Commerce Project">
-                        <div class="portfolio-overlay">
-                            <h3> Website Hospitals</h3>
-                            
-                            <a target="_blank" href="https://www.alphahospitals.co.in/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>Hospital Website</h4>
-                        <span class="portfolio-tag">Web Design</span>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <img src="commnsens.webp" alt="Corporate Project">
-                        <div class="portfolio-overlay">
-                            <h3>E-commerce Platform</h3>
-                            
-                            <a target="_blank" href="https://commnsens.com/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>E-commerce Platform</h4>
-                        <span class="portfolio-tag">Web Development</span>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <img src="servicesplus.webp" alt="SaaS Landing Page">
-                        <div class="portfolio-overlay">
-                            <h3>Web  Development</h3>
-                            
-                            <a target="_blank" href="https://www.servicesplus.in/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>Web  Development</h4>
-                        <span class="portfolio-tag">Web Development</span>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <img src="muggnos.webp" alt="Restaurant Website">
-                        <div class="portfolio-overlay">
-                            <h3>E-commerce Platform</h3>
-                            
-                            <a target="_blank" href="https://muggnos.com/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>E-commerce Platform</h4>
-                        <span class="portfolio-tag">Web Development</span>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <img src="maplezs.webp" alt="Portfolio Website">
-                        <div class="portfolio-overlay">
-                            <h3>Web Design</h3>
-                            
-                            <a target="_blank" href="https://www.maplezs.com/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>Web Design</h4>
-                        <span class="portfolio-tag">Web Design</span>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <img src="ms-enterprises.webp" alt="Blog Website">
-                        <div class="portfolio-overlay">
-                            <h3>Web Design</h3>
-                            
-                            <a target="_blank" href="https://ms-enterprises.net/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>Static Web Design</h4>
-                        <span class="portfolio-tag">Web Design</span>
-                    </div>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Great communication throughout the project. He understood our needs and delivered beyond expectations. Very happy with the result!"</div>
+      <div class="testi-author">
+        <div class="testi-avatar">F</div>
+        <div>
+          <div class="testi-name">Fatima Sheikh</div>
+          <div class="testi-role">Marketing Manager</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ============ TESTIMONIALS SECTION ============ -->
-    <section id="testimonials" class="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">What Clients Say</h2>
-                <p class="section-subtitle">Testimonials from satisfied clients</p>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Dilawar transformed our outdated website into a modern, user-friendly
-                        platform that increased our conversions by 40%. Highly recommended!"</p>
-                    <div class="testimonial-author">
-                        <h4>Sarah Ahmed</h4>
-                        <p>CEO, TechStart Solutions</p>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Professional, creative, and timely. Dilawar's attention to detail and
-                        understanding of UX principles made our project a huge success."</p>
-                    <div class="testimonial-author">
-                        <h4>Michael Chen</h4>
-                        <p>Founder, Digital Dynamics</p>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Working with Dilawar was a pleasure. He brought our vision to life and
-                        delivered a website that perfectly represents our brand."</p>
-                    <div class="testimonial-author">
-                        <h4>Aisha Khan</h4>
-                        <p>Marketing Director, Creative Hub</p>
-                    </div>
-                </div>
-            </div>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag reveal">Get In Touch</div>
+  <h2 class="section-title reveal">Let's Work <em>Together</em></h2>
+  <div class="contact-wrap">
+    <div class="contact-info reveal">
+      <h3>Have a project in mind?</h3>
+      <p>I'm currently available for freelance projects and full-time opportunities. Let's discuss how I can help bring your vision to life.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div class="contact-item-text">
+            <div class="label">Email</div>
+            <div class="val">dilawarnaqvi@email.com</div>
+          </div>
         </div>
-    </section>
-
-    <!-- ============ CONTACT SECTION ============ -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's discuss your project</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's Work Together</h3>
-                    <p>Have a project in mind? I'm always open to discussing new opportunities and creative
-                        collaborations.</p>
-
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h4>Email</h4>
-                                <a href="mailto:dilawaralinaqvi@gmail.com">dilawaralinaqvi@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h4>Phone</h4>
-                                <a href="tel:+919760919114">+91 9760919114</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <h4>Location</h4>
-                                <p>Moh: Daishmandan Amroha 244221</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Subject">
-                    </div>
-                    <div class="form-group">
-                        <textarea rows="5" placeholder="Your Message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-            </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-text">
+            <div class="label">Phone</div>
+            <div class="val">+91 XXXXX XXXXX</div>
+          </div>
         </div>
-    </section>
-
-    <!-- ============ FOOTER ============ -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Dilawar<span class="highlight">.Naqvi</span></h3>
-                    <p>Crafting digital experiences with passion and precision.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                    </ul>
-                </div>
-                <div class="footer-social">
-                    <h4>Follow Me</h4>
-                    <div class="social-icons">
-                        <a href="https://www.linkedin.com/in/dilawar-naqvi/"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.behance.net/dilawarnaqvi"><i class="fab fa-behance"></i></a>
-                        <a href="https://github.com/dilawar-naqvi0786"><i class="fab fa-github"></i></a>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Dilawar Naqvi. All Rights Reserved. | Designed with <i class="fas fa-heart"></i></p>
-            </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <div class="label">Location</div>
+            <div class="val">India</div>
+          </div>
         </div>
-    </footer>
+      </div>
+      <div class="contact-socials">
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">gh</a>
+        <a href="#" class="social-btn">be</a>
+        <a href="#" class="social-btn">tw</a>
+      </div>
+    </div>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Last name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>Service Needed</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Website Design</option>
+          <option>Front-End Development</option>
+          <option>WordPress Development</option>
+          <option>Landing Page</option>
+          <option>Website Redesign</option>
+          <option>Maintenance</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary"><span>Send Message ✉️</span></button>
+    </form>
+  </div>
+</section>
 
-    <!-- Scroll to Top Button -->
-    <button id="scrollTop" class="scroll-top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Dilawar<span>.</span></div>
+  <div>© 2026 Dilawar Naqvi — All rights reserved.</div>
+  <div>Made with ❤️ in India</div>
+</footer>
 
-    <script src="script.js"></script>
+<script>
+// ── Custom Cursor ──
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('cursorFollower');
+let mx = 0, my = 0, fx = 0, fy = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+});
+
+function animateFollower() {
+  fx += (mx - fx - 18) * 0.12;
+  fy += (my - fy - 18) * 0.12;
+  follower.style.transform = `translate(${fx}px, ${fy}px)`;
+  requestAnimationFrame(animateFollower);
+}
+animateFollower();
+
+document.querySelectorAll('a, button, .skill-card, .service-card, .project-card, .testi-card').forEach(el => {
+  el.addEventListener('mouseenter', () => follower.classList.add('hovered'));
+  el.addEventListener('mouseleave', () => follower.classList.remove('hovered'));
+});
+
+// ── Navbar scroll ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── Mobile nav ──
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+mobileNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  });
+});
+
+// ── Smooth active nav link ──
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+});
+
+// ── Scroll reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// ── Skill bar animation ──
+const skillBars = document.querySelectorAll('.skill-bar');
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animated');
+      barObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+skillBars.forEach(bar => barObserver.observe(bar));
+
+// ── Contact form ──
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.innerHTML = '<span>Message Sent! ✅</span>';
+  btn.style.background = '#2a7a4f';
+  setTimeout(() => {
+    btn.innerHTML = '<span>Send Message ✉️</span>';
+    btn.style.background = '';
+    e.target.reset();
+  }, 3000);
+}
+
+// ── Hero number counter animation ──
+function animateCount(el, target, suffix='') {
+  let count = 0;
+  const step = Math.ceil(target / 40);
+  const timer = setInterval(() => {
+    count += step;
+    if (count >= target) { count = target; clearInterval(timer); }
+    el.innerHTML = count + '<span>' + suffix + '</span>';
+  }, 40);
+}
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.stat-num').forEach(el => {
+        const text = el.textContent;
+        const num = parseInt(text);
+        const suf = text.includes('+') ? '+' : '';
+        animateCount(el, num, suf);
+      });
+      statsObserver.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) statsObserver.observe(heroStats);
+</script>
 </body>
-
 </html>
